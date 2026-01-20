@@ -33,7 +33,12 @@ DigitalOcean App Platform is the easiest way to deploy. It automatically builds 
 - **Name**: `aluquote-backend` (or your preferred name)
 - **Region**: Choose closest to your users
 - **Build Command**: (auto-detected from Dockerfile)
-- **Run Command**: (auto-detected from Dockerfile)
+- **Run Command**: If not auto-detected, manually enter:
+  ```
+  uvicorn main:app --host 0.0.0.0 --port 8000
+  ```
+
+**Note**: If Digital Ocean shows "No run command defined", manually set it in the Run Command field above.
 
 **Resource Configuration:**
 - **Plan**: Basic ($5/month) for testing, Professional for production
