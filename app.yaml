@@ -1,0 +1,58 @@
+# DigitalOcean App Platform Configuration
+# This file can be used for App Platform deployment
+# Place this in your repository root
+
+name: aluquote-backend
+region: nyc
+
+services:
+  - name: api
+    github:
+      repo: your-username/your-repo
+      branch: main
+      deploy_on_push: true
+
+    # Dockerfile is automatically detected
+    dockerfile_path: Dockerfile
+
+    # Health check
+    health_check:
+      http_path: /api/health
+
+    # Instance configuration
+    instance_count: 1
+    instance_size_slug: basic-xxs  # 512MB RAM, 1 vCPU ($5/month)
+    # For production, use: professional-xs (1GB RAM, 1 vCPU - $12/month)
+
+    # Environment variables (add as needed)
+    envs:
+      - key: PORT
+        value: "8000"
+      # Add more environment variables here
+      # - key: DATABASE_URL
+      #   value: ${db.DATABASE_URL}
+      #   scope: RUN_TIME
+      #   type: SECRET
+
+    # HTTP routes
+    http_port: 8000
+    routes:
+      - path: /
+
+    # Resource limits
+    # Uncomment and adjust if needed
+    # resource_limits:
+    #   memory: 1024
+    #   cpu: 1000
+
+# Optional: Database service (uncomment if needed)
+# databases:
+#   - name: aluquote-db
+#     engine: PG
+#     production: false
+#     version: "14"
+#     cluster_name: aluquote-db-cluster
+#     db_name: aluquote
+#     db_user: aluquote
+
+# Optional: Static site or worker services can be added here

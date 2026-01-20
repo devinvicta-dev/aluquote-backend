@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  aluquote-backend:
+    build: .
+    container_name: aluquote-backend
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    volumes:
+      # Persistent storage for uploads and exports
+      - ./uploads:/app/uploads
+      - ./exports:/app/exports
+      # Optional: Mount logs directory
+      - ./logs:/app/logs
+    environment:
+      - PORT=8000
+      # Add other environment variables as needed
+      # - DATABASE_URL=postgresql://...
+      # - SECRET_KEY=...
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    # Resource limits (adjust based on your needs)
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
